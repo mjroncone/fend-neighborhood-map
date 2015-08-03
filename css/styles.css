@@ -1,3 +1,29 @@
-*{
+body{
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
+main{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row
+}
+
+#search{
+  height: 10vh;
+  width: 100vw;
+  background-color: red
+}
+
+#location-list{
+  height: 90vh;
+  width: 25vw;
+
+}
+
+#map-area{
+  height: 90vh;
+  width: 75vw;
 }
