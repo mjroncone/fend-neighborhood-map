@@ -5,16 +5,17 @@
     <title>Mike Roncone's neighborhood map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9HlnwXsPlOG1m3D6UVLNrW3O5LU7CHA"></script>
-    <script src="js/app.js"></script>
   </head>
   <body>
     <header></header>
     <main>
-      <section id="search"></section>
+      <section id="search-box">Search: <input type="text"></section>
       <section id="location-list"></section>
       <section id="map-area"></section>
     </main>
     <footer></footer>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/knockout/dist/knockout.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
