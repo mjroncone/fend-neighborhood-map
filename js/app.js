@@ -17,7 +17,15 @@ function initialize() {
   var marker = new google.maps.Marker({
     position: {lat: 41.928640 , lng: -87.642064},
     title: 'Starbucks',
+    infowindow: new google.maps.InfoWindow({
+      content: '<div>Hello World!</div>'
+    }),
+    animation: google.maps.Animation.DROP,
     map: map
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    marker.infowindow.open(map, marker);
   });
 }
 
