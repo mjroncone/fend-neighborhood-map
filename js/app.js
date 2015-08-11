@@ -13,6 +13,12 @@ function initialize() {
   // Creates a new G.Maps object and fixed it to the element with id 'map-area'
   var map = new google.maps.Map(document.getElementById('map-area'),
       mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: {lat: 41.928640 , lng: -87.642064},
+    title: 'Starbucks',
+    map: map
+  });
 }
 
 // Contains the script to actually make the API request, putting it here and
