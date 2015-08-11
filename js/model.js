@@ -1,7 +1,7 @@
 function mapMarkerViewModel() {
   var self = this;
 
-  self.search = ko.observable('');
+  self.search = ko.observable('Coffee');
 
 
 
