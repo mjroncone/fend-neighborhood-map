@@ -18,14 +18,23 @@ function initialize() {
     position: {lat: 41.928640 , lng: -87.642064},
     title: 'Starbucks',
     infowindow: new google.maps.InfoWindow({
-      content: '<div>Hello World!</div>'
+      content: '<div>Starbucks!</div>'
     }),
     animation: google.maps.Animation.DROP,
     map: map
   });
 
+  function toggleBounce() {
+    if (marker.getAnimation() != null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  };
+
   google.maps.event.addListener(marker, 'click', function() {
     marker.infowindow.open(map, marker);
+    toggleBounce();
   });
 }
 
