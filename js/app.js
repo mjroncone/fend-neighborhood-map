@@ -43,7 +43,7 @@ function updateMarkers() {
       }),
     }
   }
-  addMapsMarkers(markerObject);
+  google.maps.event.addListener(map, 'tilesloaded', addMapsMarkers(markerObject));
 };
 
 function addMapsMarkers(markerObject) {
