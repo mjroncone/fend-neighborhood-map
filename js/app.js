@@ -41,30 +41,40 @@ function updateMarkers() {
       infoWindow: new google.maps.InfoWindow({
         content: '<div>Starbucks!</div>'
       }),
+    },
+    standardMarket: {
+      position: {lat: 41.925894, lng: -87.641075},
+      title: 'Standard Market',
+      infoWindow: new google.maps.InfoWindow({
+        content: '<div>Standard Market!</div>'
+      }),
     }
   }
   google.maps.event.addListener(map, 'tilesloaded', addMapsMarkers(markerObject));
 };
 
 function addMapsMarkers(markerObject) {
-  var marker = new google.maps.Marker({
-    position: markerObject.starbucks.position,
-    title: markerObject.starbucks.title,
-    infowindow: markerObject.starbucks.infoWindow,
-    animation: google.maps.Animation.DROP,
-    map: map
-  });
 
-  function toggleBounce() {
-    if (marker.getAnimation() != null) {
-      marker.setAnimation(null);
-    } else {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
-  };
+  for (var business in markerObject){
+    var marker = new google.maps.Marker({
+      position: markerObject[business].position,
+      title: markerObject[business].title,
+      infowindow: markerObject[business].infoWindow,
+      animation: google.maps.Animation.DROP,
+      map: map
+    });
 
-  google.maps.event.addListener(marker, 'click', function() {
-    marker.infowindow.open(map, marker);
-    toggleBounce();
-  });
+    function toggleBounce() {
+      if (marker.getAnimation() != null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+    };
+
+    google.maps.event.addListener(marker, 'click', function() {
+      marker.infowindow.open(map, marker);
+      toggleBounce();
+    });
+  }
 };
