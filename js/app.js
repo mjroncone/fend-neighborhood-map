@@ -55,6 +55,8 @@ function updateMarkers() {
 
 function addMapsMarkers(markerObject) {
 
+  var markerList = [];
+
   for (var business in markerObject){
     var marker = new google.maps.Marker({
       position: markerObject[business].position,
@@ -64,17 +66,24 @@ function addMapsMarkers(markerObject) {
       map: map
     });
 
-    function toggleBounce() {
-      if (marker.getAnimation() != null) {
-        marker.setAnimation(null);
+    marker.toggleBounce = function() {
+      if (this.getAnimation() != null) {
+        this.setAnimation(null);
       } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
+        this.setAnimation(google.maps.Animation.BOUNCE);
       }
     };
 
     google.maps.event.addListener(marker, 'click', function() {
-      marker.infowindow.open(map, marker);
-      toggleBounce();
+      markerList.forEach(function(mrkr) {
+        if (mrkr.animation != null) {
+          mrkr.setAnimation(null);
+        }
+      });
+      this.infowindow.open(map, this);
+      this.toggleBounce();
     });
+
+    markerList.push(marker);
   }
 };
