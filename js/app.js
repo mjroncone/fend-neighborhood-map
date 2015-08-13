@@ -18,11 +18,11 @@ window.onload = startApp;
 
 function initialize() {
   // Creates LatLng object to feed into G.Maps API for map center position
-  var lincolnParkChicago = {lat: 41.926411, lng: -87.643326};
+  var mapTarget = {lat: 41.926411, lng: -87.643326};
 
   // Sets the mapOptions that will be served in the API request
   var mapOptions = {
-   center : lincolnParkChicago,
+   center : mapTarget,
    zoom : 16
   }
 
@@ -30,11 +30,43 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-area'),
     mapOptions);
 
-  updateMarkers();
+  getLocations(mapTarget.lat, mapTarget.lng);
 };
 
+window.onload = startApp;
+
+function getLocations(lat, lng) {
+  var fourSqBaseRequest = 'https://api.foursquare.com/v2/venues/search?intent=browse';
+  var target = '&ll=' + lat + ',' + lng;
+  var radius = '&radius=' + 500;
+  var categoryIds = ['4bf58dd8d48988d1e0931735','4d4b7105d754a06374d81259'];
+  var categories = '&categoryId=' + categoryIds.reduce(function(previousValue, currentValue){
+      return previousValue + ',' + currentValue});
+  var client_id = '&client_id=' + 'E2KGUFUAJOBTFYJLJT1NT50XKR3IDGYMFMOLG2G3GNXXUHB5';
+  var client_secret= '&client_secret=' + '5ABPBLHRJNIRA5ROV0OMTNQGL3A5YMPNUPMY0J4UYOZONN5V';
+  var version = '&v=' + '20150101';
+
+  var ajaxUrl = fourSqBaseRequest + target + radius + categories + client_id + client_secret + version;
+
+  $.getJSON(ajaxUrl, function( data ){
+    makeLocationsObject(data.response.venues);
+  });
+
+  function makeLocationsObject(data) {
+    var locationsObject = {};
+
+    var venueData = data;
+    venueData.forEach( function(venue) {
+      locationsObject[venue.name] = venue;
+    });
+    addMapsMarkers(locationsObject);
+    console.log(locationsObject)
+  };
+};
+
+/*
 function updateMarkers() {
-  var markerObject = {
+  var locationsObject = {
     starbucks: {
       position: {lat: 41.928640 , lng: -87.642064},
       title: 'Starbucks',
@@ -50,18 +82,20 @@ function updateMarkers() {
       }),
     }
   }
-  google.maps.event.addListener(map, 'tilesloaded', addMapsMarkers(markerObject));
+  google.maps.event.addListener(map, 'tilesloaded', addMapsMarkers(locationObject));
 };
+*/
 
-function addMapsMarkers(markerObject) {
+function addMapsMarkers(locationsObject) {
 
   var markerList = [];
 
-  for (var business in markerObject){
+  for (var business in locationsObject){
+    currLocation = locationsObject[business];
     var marker = new google.maps.Marker({
-      position: markerObject[business].position,
-      title: markerObject[business].title,
-      infowindow: markerObject[business].infoWindow,
+      position: {lat: currLocation.location.lat, lng: currLocation.location.lng},
+      title: currLocation.name,
+      //infowindow: currLocation.infoWindow,
       animation: google.maps.Animation.DROP,
       map: map
     });
@@ -80,7 +114,7 @@ function addMapsMarkers(markerObject) {
           mrkr.setAnimation(null);
         }
       });
-      this.infowindow.open(map, this);
+      //this.infowindow.open(map, this);
       this.toggleBounce();
     });
 
