@@ -95,10 +95,17 @@ function addMapsMarkers(locationsObject) {
     var marker = new google.maps.Marker({
       position: {lat: currLocation.location.lat, lng: currLocation.location.lng},
       title: currLocation.name,
-      //infowindow: currLocation.infoWindow,
       animation: google.maps.Animation.DROP,
       map: map
     });
+
+    marker.infowindow = new google.maps.InfoWindow({
+      content: '<section class="infoWindow">' +
+                  '<header><h1>' +
+                    marker.title +
+                  '</h1></header>' +
+                '</section>'
+    }),
 
     marker.toggleBounce = function() {
       if (this.getAnimation() != null) {
@@ -112,9 +119,10 @@ function addMapsMarkers(locationsObject) {
       markerList.forEach(function(mrkr) {
         if (mrkr.animation != null) {
           mrkr.setAnimation(null);
+          mrkr.infowindow.close(map, mrkr);
         }
       });
-      //this.infowindow.open(map, this);
+      this.infowindow.open(map, this);
       this.toggleBounce();
     });
 
