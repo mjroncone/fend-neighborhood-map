@@ -9,9 +9,16 @@
   <body>
     <header></header>
     <main>
-      <section id="search-box">Search: <input type="text" data-bind="value: search"></section>
-      <section id="location-list"></section>
+
+      <section id="search-box">
+        <input type="text" data-bind="textInput: filter" placeholder="What would you like?">
+      </section>
+
+      <section id="location-list">
+      </section>
+
       <section id="map-area"></section>
+
     </main>
     <footer></footer>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>

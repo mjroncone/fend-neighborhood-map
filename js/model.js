@@ -1,12 +1,13 @@
-function mapMarkerViewModel() {
+function MapMarkerViewModel() {
   var self = this;
 
-  self.search = ko.observable('');
+  self.filter = ko.observable('');
 
-  
+  self.update = ko.computed( function() {
+    return updateMarkers(self.filter());
+  }, self)
 
 
-}
+};
 
-// Adds Knockout dependency tracking.
-ko.applyBindings(new mapMarkerViewModel());
+ko.applyBindings(new MapMarkerViewModel());

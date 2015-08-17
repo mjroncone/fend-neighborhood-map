@@ -1,6 +1,7 @@
 var map;
+var markerList = [];
 
-// Following functions are from GoogleMaps' API documentation:
+// Following startApp and initialize functions are from GoogleMaps' API documentation:
 //  https://developers.google.com/maps/documentation/javascript/tutorial
 
 // Contains the script to actually make the API request, putting it here and
@@ -23,7 +24,8 @@ function initialize() {
   // Sets the mapOptions that will be served in the API request
   var mapOptions = {
    center : mapTarget,
-   zoom : 16
+   zoom : 16,
+   disableDefaultUI: true
   }
 
   // Creates a new G.Maps object and fixed it to the element with id 'map-area'
@@ -31,9 +33,7 @@ function initialize() {
     mapOptions);
 
   getLocations(mapTarget.lat, mapTarget.lng);
-};
-
-window.onload = startApp;
+}
 
 function getLocations(lat, lng) {
   var fourSqBaseRequest = 'https://api.foursquare.com/v2/venues/search?intent=browse';
@@ -64,31 +64,7 @@ function getLocations(lat, lng) {
   };
 };
 
-/*
-function updateMarkers() {
-  var locationsObject = {
-    starbucks: {
-      position: {lat: 41.928640 , lng: -87.642064},
-      title: 'Starbucks',
-      infoWindow: new google.maps.InfoWindow({
-        content: '<div>Starbucks!</div>'
-      }),
-    },
-    standardMarket: {
-      position: {lat: 41.925894, lng: -87.641075},
-      title: 'Standard Market',
-      infoWindow: new google.maps.InfoWindow({
-        content: '<div>Standard Market!</div>'
-      }),
-    }
-  }
-  google.maps.event.addListener(map, 'tilesloaded', addMapsMarkers(locationObject));
-};
-*/
-
 function addMapsMarkers(locationsObject) {
-
-  var markerList = [];
 
   for (var business in locationsObject){
     currLocation = locationsObject[business];
@@ -96,7 +72,8 @@ function addMapsMarkers(locationsObject) {
       position: {lat: currLocation.location.lat, lng: currLocation.location.lng},
       title: currLocation.name,
       animation: google.maps.Animation.DROP,
-      map: map
+      map: null,
+      keywords: currLocation.name
     });
 
     marker.infowindow = new google.maps.InfoWindow({
@@ -127,5 +104,22 @@ function addMapsMarkers(locationsObject) {
     });
 
     markerList.push(marker);
-  }
+  };
+  updateMarkers('');
+};
+
+var updateMarkers = function(filter) {
+
+  markerList.forEach( function(marker) {
+
+    marker.filter = ko.computed( function() {
+      if (marker.keywords.toLowerCase().indexOf(filter.toLowerCase()) === -1) {
+        return 'hide'; } else { return 'show'}
+    }, self);
+
+    ko.computed(function() {
+      if (marker.filter() === 'show') {
+      marker.setMap(map);} else { marker.setMap(null);}
+    });
+  })
 };

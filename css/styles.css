@@ -23,8 +23,42 @@ main{
   font-weight: bold;
   */
 }
+#search-box{
+  height: 5%;
+  width: 100%;
+  padding: 0px;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+input{
+  height: inherit;
+  width: inherit;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+}
 
 #map-area{
   height: 100%;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+#location-list{
+  width:20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
