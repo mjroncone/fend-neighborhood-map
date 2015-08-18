@@ -1,5 +1,6 @@
 var map;
-var markerList = [];
+var markerList = ko.observableArray([]);
+var targetLoc = {lat: 41.926411, lng: -87.643326};
 
 // Following startApp and initialize functions are from GoogleMaps' API documentation:
 //  https://developers.google.com/maps/documentation/javascript/tutorial
@@ -15,11 +16,9 @@ function startApp() {
 
 }
 
-window.onload = startApp;
-
 function initialize() {
   // Creates LatLng object to feed into G.Maps API for map center position
-  var mapTarget = {lat: 41.926411, lng: -87.643326};
+  var mapTarget = targetLoc;
 
   // Sets the mapOptions that will be served in the API request
   var mapOptions = {
@@ -32,10 +31,9 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-area'),
     mapOptions);
 
-  getLocations(mapTarget.lat, mapTarget.lng);
 }
 
-function getLocations(lat, lng) {
+function fourSquareAjaxConstructor(lat, lng) {
   var fourSqBaseRequest = 'https://api.foursquare.com/v2/venues/search?intent=browse';
   var target = '&ll=' + lat + ',' + lng;
   var radius = '&radius=' + 500;
@@ -48,21 +46,28 @@ function getLocations(lat, lng) {
 
   var ajaxUrl = fourSqBaseRequest + target + radius + categories + client_id + client_secret + version;
 
-  $.getJSON(ajaxUrl, function( data ){
-    makeLocationsObject(data.response.venues);
-  });
-
-  function makeLocationsObject(data) {
-    var locationsObject = {};
-
-    var venueData = data;
-    venueData.forEach( function(venue) {
-      locationsObject[venue.name] = venue;
-    });
-    addMapsMarkers(locationsObject);
-    console.log(locationsObject)
-  };
+  return ajaxUrl;
 };
+
+function makeLocationsObject(data) {
+  var locationsObject = {};
+
+  var venueData = data;
+  venueData.forEach( function(venue) {
+    locationsObject[venue.name] = venue;
+  });
+  addMapsMarkers(locationsObject);
+  console.log(locationsObject);
+};
+
+function closeVenues() {
+  markerList().forEach(function(mrkr) {
+    if (mrkr.animation != null) {
+      mrkr.setAnimation(null);
+      mrkr.infowindow.close(map, mrkr);
+    }
+  });
+}
 
 function addMapsMarkers(locationsObject) {
 
@@ -73,7 +78,8 @@ function addMapsMarkers(locationsObject) {
       title: currLocation.name,
       animation: google.maps.Animation.DROP,
       map: null,
-      keywords: currLocation.name
+      keywords: currLocation.name,
+      filter: function() {}
     });
 
     marker.infowindow = new google.maps.InfoWindow({
@@ -93,33 +99,30 @@ function addMapsMarkers(locationsObject) {
     };
 
     google.maps.event.addListener(marker, 'click', function() {
-      markerList.forEach(function(mrkr) {
-        if (mrkr.animation != null) {
-          mrkr.setAnimation(null);
-          mrkr.infowindow.close(map, mrkr);
-        }
-      });
+      closeVenues();
       this.infowindow.open(map, this);
       this.toggleBounce();
     });
 
-    markerList.push(marker);
+    markerList().push(marker);
   };
-  updateMarkers('');
+  return markerList();
 };
 
 var updateMarkers = function(filter) {
+  var wantedVenue = [];
 
-  markerList.forEach( function(marker) {
+  markerList().forEach( function(marker) {
+    if (marker.keywords.toLowerCase().indexOf(filter.toLowerCase()) != -1) {
+      wantedVenue.push(marker);
+    }
 
-    marker.filter = ko.computed( function() {
-      if (marker.keywords.toLowerCase().indexOf(filter.toLowerCase()) === -1) {
-        return 'hide'; } else { return 'show'}
-    }, self);
+      if (wantedVenue.indexOf(marker) != -1) {
+        marker.setMap(map);
+      } else {
+        marker.setMap(null);
+      }
+  });
 
-    ko.computed(function() {
-      if (marker.filter() === 'show') {
-      marker.setMap(map);} else { marker.setMap(null);}
-    });
-  })
+  return wantedVenue;
 };

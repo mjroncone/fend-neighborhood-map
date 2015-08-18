@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 html{
   width: 100%;
   height: 100%;
@@ -17,6 +22,11 @@ main{
   flex-wrap: wrap;
 }
 
+li{
+  padding: 1vh;
+  width: 100%;
+}
+
 .infoWindow, header{
   /*
   font-size: 16px;
@@ -26,39 +36,32 @@ main{
 #search-box{
   height: 5%;
   width: 100%;
-  padding: 0px;
   z-index: 3;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
 }
 
 input{
-  height: inherit;
+  height: 100%;
   width: inherit;
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
 }
 
 #map-area{
   height: 100%;
   width: 100%;
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
 }
 
 #location-list{
   width:20%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  height: 95%;
+  background-color: white;
   z-index: 2;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
