@@ -1,20 +1,20 @@
+/* Declaring our map, markerList, and targetLoc up top makes them global variables
+    so that they can be accessed directly from the ViewModel when invoking functions. */
 var map;
 var markerList = ko.observableArray([]);
 var targetLoc = {lat: 41.926411, lng: -87.643326};
 
-// Following startApp and initialize functions are from GoogleMaps' API documentation:
-//  https://developers.google.com/maps/documentation/javascript/tutorial
-
-// Contains the script to actually make the API request, putting it here and
-// invoking it later allows us to load G.Maps asynchronously on window load.
+/* The following startApp and initialize functions are from GoogleMaps' API documentation:
+    https://developers.google.com/maps/documentation/javascript/tutorial */
+/* startApp and initialize contain the scripts to actually make the API request,
+    which is invoked later to load G.Maps asynchronously on window load. */
 function startApp() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9HlnwXsPlOG1m3D6UVLNrW3O5LU7CHA' +
                   '&signed_in=true&callback=initialize';
   document.body.appendChild(script);
-
-}
+};
 
 function initialize() {
   // Creates LatLng object to feed into G.Maps API for map center position
@@ -30,9 +30,21 @@ function initialize() {
   // Creates a new G.Maps object and fixed it to the element with id 'map-area'
   map = new google.maps.Map(document.getElementById('map-area'),
     mapOptions);
+};
 
-}
+/* closeVenues closes any open Google Maps info windows and stops the marker's animation
+    whenever invoked */
+function closeVenues() {
+  markerList().forEach(function(mrkr) {
+    if (mrkr.animation != null) {
+      mrkr.setAnimation(null);
+      mrkr.infowindow.close(map, mrkr);
+    }
+  });
+};
 
+/* fourSquareAjaxConstructor pieces together the Four Square API request URL and
+    returns it to the invoking function. */
 function fourSquareAjaxConstructor(lat, lng) {
   var fourSqBaseRequest = 'https://api.foursquare.com/v2/venues/search?intent=browse';
   var target = '&ll=' + lat + ',' + lng;
@@ -49,6 +61,10 @@ function fourSquareAjaxConstructor(lat, lng) {
   return ajaxUrl;
 };
 
+/* makeLocationsObject takes in the object from the API request and extracts only
+    the information we need, placing it into locationsObject and feeding that
+    to the addMapsMarkers function. */
+
 function makeLocationsObject(data) {
   var locationsObject = {};
 
@@ -60,19 +76,17 @@ function makeLocationsObject(data) {
   console.log(locationsObject);
 };
 
-function closeVenues() {
-  markerList().forEach(function(mrkr) {
-    if (mrkr.animation != null) {
-      mrkr.setAnimation(null);
-      mrkr.infowindow.close(map, mrkr);
-    }
-  });
-}
+/* addMapsMarkers takes our locationsObject and creates Google Maps-readable marker
+    objects. It reads the relevant details from each location, constructs an infowindow
+    that can be added to the DOM on command, adds an event listener to each marker,
+    and packages all these markers up into a list which is returned to the invoking function. */
 
 function addMapsMarkers(locationsObject) {
-
+  // loops over the locations' object data and creates a new G.Maps marker for each
   for (var business in locationsObject){
+    // Similar to declaring self = this, helps with loop readability.
     currLocation = locationsObject[business];
+    // Marker construction starts here and goes until pushed onto the markerList
     var marker = new google.maps.Marker({
       position: {lat: currLocation.location.lat, lng: currLocation.location.lng},
       title: currLocation.name,
@@ -82,6 +96,8 @@ function addMapsMarkers(locationsObject) {
       filter: function() {}
     });
 
+    /* Contains the DOM construction of our infoWindows with data from each object.
+        content is also used through ko bindings for the list view*/
     marker.infowindow = new google.maps.InfoWindow({
       content: '<section class="infoWindow">' +
                   '<header><h1>' +
@@ -104,6 +120,7 @@ function addMapsMarkers(locationsObject) {
       this.toggleBounce();
     });
 
+    // Each marker object is pushed onto our global array markerList for easy access
     markerList().push(marker);
   };
   return markerList();

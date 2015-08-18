@@ -14,10 +14,8 @@
         <input type="text" data-bind="textInput: filter" placeholder="What would you like?">
       </section>
 
-      <section id="location-list">
-        <ul data-bind="foreach: visibleMarkers()">
-          <li><strong data-bind="text: $data.title, click: $parent.listClick"></strong></li>
-        </ul>
+      <section id="location-list" data-bind="foreach: visibleMarkers()">
+          <div class="venue" data-bind="html:$data.infowindow.content, click: $parent.listClick"></div>
       </section>
 
       <section id="map-area"></section>
