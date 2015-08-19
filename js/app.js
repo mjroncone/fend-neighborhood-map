@@ -9,6 +9,7 @@ var targetLoc = {lat: 41.926411, lng: -87.643326};
 /* startApp and initialize contain the scripts to actually make the API request,
     which is invoked later to load G.Maps asynchronously on window load. */
 function startApp() {
+
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9HlnwXsPlOG1m3D6UVLNrW3O5LU7CHA' +
@@ -17,6 +18,16 @@ function startApp() {
 };
 
 function initialize() {
+  /* The below conditional is to check whether the Google Maps API has been loaded
+      correctly or not. If not, it appends an error message to the page.
+      Credit goes to DaveS on Stack Overflow: http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded */
+  if (typeof google === 'object' && typeof google.maps === 'object')
+    {
+      return true;
+    } else {
+        $('#error-box').append('<div class="maps-error"><br><br><p><strong>Oh no! Either we\'re speaking gibberish, your internet is disconnected, or the Google Maps servers are down! Please check your internet connection and try again.  </strong></p><div>');
+      }
+
   // Creates LatLng object to feed into G.Maps API for map center position
   var mapTarget = targetLoc;
 

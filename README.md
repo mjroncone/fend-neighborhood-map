@@ -5,8 +5,8 @@
 =======
 
 1. Introduce Error-handling
-  * **Google Maps API** 
-  * **FourSquare API**
+  * **Google Maps API** DONE!
+  * **FourSquare API** DONE!
 
 2. Introduce more responsive design
   * **Sliding List View:** add media query that hides the list view below certain pixels, with a hamburger menu and animation to bring it out. When item in list is clicked, hide menu and highlight marker.

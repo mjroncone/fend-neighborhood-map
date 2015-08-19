@@ -14,13 +14,17 @@
         <input type="text" data-bind="textInput: filter" placeholder="What would you like?">
       </section>
 
+      <section id="error-box"></section>
+
       <section id="location-list" data-bind="foreach: visibleMarkers">
         <div class="venue">
           <h1 data-bind="html:$data.title, click: $parent.listClick"></h1>
           <p data-bind="text: $data.phone, click: $parent.listClick"></p>
           <p data-bind="text: $data.address, click: $parent.listClick"></p>
           <p data-bind="text: $data.category, click: $parent.listClick"></p>
+          <!-- ko if: $data.menu -->
           <a data-bind="if: $data.menu != false, attr: {href: $data.menu }" target="blank">Click to view the menu!</a>
+          <!-- /ko -->
         </div>
       </section>
 

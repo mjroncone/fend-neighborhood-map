@@ -78,3 +78,7 @@ input{
   border-bottom: 1px dashed grey;
 
 }
+
+#error-box{
+  z-index: 100;
+}
