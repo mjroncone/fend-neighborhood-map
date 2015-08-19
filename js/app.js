@@ -4,6 +4,16 @@ var map;
 var markerList = ko.observableArray([]);
 var targetLoc = {lat: 41.926411, lng: -87.643326};
 
+var mapsErrorChecker = function() {
+  /* The below conditional is to check whether the Google Maps API has been loaded
+      correctly or not. If not, it appends an error message to the page.
+      Inspired by DaveS on Stack Overflow: http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded */
+  if (typeof google != 'object' || typeof google.maps != 'object')
+    {
+      $('#error-box').append('<div class="maps-error"><br><br><p><strong>Oh no! Either we\'re speaking gibberish, your internet is disconnected, or the Google Maps servers are down! Please check your internet connection and try again.  </strong></p><div>');
+    }
+};
+
 /* The following startApp and initialize functions are from GoogleMaps' API documentation:
     https://developers.google.com/maps/documentation/javascript/tutorial */
 /* startApp and initialize contain the scripts to actually make the API request,
@@ -13,18 +23,12 @@ function startApp() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9HlnwXsPlOG1m3D6UVLNrW3O5LU7CHA' +
-                  '&signed_in=true&callback=initialize';
+                  '&callback=initialize';
   document.body.appendChild(script);
 };
 
 function initialize() {
-  /* The below conditional is to check whether the Google Maps API has been loaded
-      correctly or not. If not, it appends an error message to the page.
-      Inspired by DaveS on Stack Overflow: http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded */
-  if (typeof google != 'object' || typeof google.maps != 'object')
-    {
-      $('#error-box').append('<div class="maps-error"><br><br><p><strong>Oh no! Either we\'re speaking gibberish, your internet is disconnected, or the Google Maps servers are down! Please check your internet connection and try again.  </strong></p><div>');
-    }
+  mapsErrorChecker();
 
   // Creates LatLng object to feed into G.Maps API for map center position
   var mapTarget = targetLoc;
@@ -90,6 +94,7 @@ function makeLocationsObject(data) {
     and packages all these markers up into a list which is returned to the invoking function. */
 
 function addMapsMarkers(locationsObject) {
+  mapsErrorChecker();
   // loops over the locations' object data and creates a new G.Maps marker for each
   for (var business in locationsObject){
     // Similar to declaring self = this, helps with loop readability.
@@ -173,3 +178,17 @@ var updateMarkers = function(filter) {
   // Returns the displayed venues to the ViewModel for use in the listView.
   return wantedVenue;
 };
+
+function toggleSlide() {
+
+  $('#location-list').toggleClass('has-active');
+  if ($('#location-list').hasClass('has-active')){
+    document.getElementById("locations-button").innerHTML = "Close List";
+  } else {
+    document.getElementById("locations-button").innerHTML = "Open List";
+  }
+
+
+};
+
+document.getElementById("locations-button").addEventListener("click", toggleSlide);

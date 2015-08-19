@@ -10,13 +10,14 @@
     <header></header>
     <main>
 
-      <section id="search-box">
-        <input type="text" data-bind="textInput: filter" placeholder="What would you like?">
-      </section>
+      <nav id="top-nav">
+        <button id="locations-button" class="slider-button">Open List</button>
+        <input class="search-box" type="text" data-bind="textInput: filter" placeholder="What would you like?">
+      </nav>
 
       <section id="error-box"></section>
 
-      <section id="location-list" data-bind="foreach: visibleMarkers">
+      <nav id="location-list" class="slider-menu" data-bind="foreach: visibleMarkers">
         <div class="venue">
           <h1 data-bind="html:$data.title, click: $parent.listClick"></h1>
           <p data-bind="text: $data.phone, click: $parent.listClick"></p>
@@ -26,7 +27,7 @@
           <a data-bind="if: $data.menu != false, attr: {href: $data.menu }" target="blank">Click to view the menu!</a>
           <!-- /ko -->
         </div>
-      </section>
+      </nav>
 
       <section id="map-area"></section>
 

@@ -10,7 +10,8 @@ function MapMarkerViewModel() {
 
   /* Deferred jQuery JSON request which, after receiving a response from the server and
       executing a callback to make the markerList, updates the value of our observable array
-      by invoking the updateMarkers function with the current filter argument. */
+      by invoking the updateMarkers function with the current filter argument. If an error is
+      thrown, the locations list populates with an error message.*/
   $.when(
     $.getJSON( fourSquareAjaxConstructor(targetLoc.lat, targetLoc.lng), function( data ) {
           makeLocationsObject(data.response.venues) }
@@ -31,6 +32,7 @@ function MapMarkerViewModel() {
     });
 
   self.listClick = function() {
+    toggleSlide();
     closeVenues();
     // TODO: should clicking a list item open the infowindow also? They display same info.
     this.infowindow.open(map, this);
