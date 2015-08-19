@@ -20,13 +20,11 @@ function startApp() {
 function initialize() {
   /* The below conditional is to check whether the Google Maps API has been loaded
       correctly or not. If not, it appends an error message to the page.
-      Credit goes to DaveS on Stack Overflow: http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded */
-  if (typeof google === 'object' && typeof google.maps === 'object')
+      Inspired by DaveS on Stack Overflow: http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded */
+  if (typeof google != 'object' || typeof google.maps != 'object')
     {
-      return true;
-    } else {
-        $('#error-box').append('<div class="maps-error"><br><br><p><strong>Oh no! Either we\'re speaking gibberish, your internet is disconnected, or the Google Maps servers are down! Please check your internet connection and try again.  </strong></p><div>');
-      }
+      $('#error-box').append('<div class="maps-error"><br><br><p><strong>Oh no! Either we\'re speaking gibberish, your internet is disconnected, or the Google Maps servers are down! Please check your internet connection and try again.  </strong></p><div>');
+    }
 
   // Creates LatLng object to feed into G.Maps API for map center position
   var mapTarget = targetLoc;
