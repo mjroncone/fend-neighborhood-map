@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin');
 
 gulp.task('default', function() {
-  // place code for your default task here
+
 });
 
 gulp.task('styles', function() {
@@ -37,29 +37,4 @@ gulp.task('images', function() {
   return gulp.src('img/*')
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
     .pipe(gulp.dest('dist/img'))
-});
-
-// Below code operates on the views folder instead of index
-gulp.task('views-styles', function() {
-  return gulp.src('views/css/*.css')
-    .pipe(gulp.dest('dist/css'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
-    .pipe(gulp.dest('dist/views/css'))
-});
-
-gulp.task('views-js-lint-compile', function() {
-  return gulp.src('views/js/*.js') //reads all files in js w/ a .js extension
-    .pipe(jshint()) // run their contents through jshint
-    .pipe(jshint.reporter('default')) // report any findings from jshint
-    .pipe(gulp.dest('dist/js')) // write that file to the dist/js dir
-    .pipe(rename({suffix: '.min' })) // renames the file in memory
-    .pipe(uglify()) // runs uglify on all.min.js (for minification)
-    .pipe(gulp.dest('dist/views/js')) // write all.min.js to the dist/js dir
-});
-
-gulp.task('views-images', function() {
-  return gulp.src('views/images/*')
-    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-    .pipe(gulp.dest('dist/views/img'))
 });

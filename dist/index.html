@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mike Roncone's neighborhood map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header></header>
+    <main>
+
+      <nav id="top-nav">
+        <button id="locations-button" class="slider-button">Open List</button>
+        <input class="search-box" type="text" data-bind="textInput: filter" placeholder="What would you like?">
+      </nav>
+
+      <section id="error-box"></section>
+
+      <nav id="location-list" class="slider-menu" data-bind="foreach: visibleMarkers">
+        <div class="venue">
+          <strong data-bind="html:$data.title, click: $parent.listClick"></strong>
+          <p data-bind="text: $data.phone, click: $parent.listClick"></p>
+          <p data-bind="text: $data.address, click: $parent.listClick"></p>
+          <p data-bind="text: $data.category, click: $parent.listClick"></p>
+          <!-- ko if: $data.menu -->
+          <a data-bind="if: $data.menu != false, attr: {href: $data.menu }" target="blank">Click to view the menu!</a>
+          <!-- /ko -->
+        </div>
+      </nav>
+
+      <section id="map-area"></section>
+
+    </main>
+    <footer></footer>
+    <script src="frameworks/jquery.min.js"></script>
+    <script src="frameworks/knockout.min.js"></script>
+    <script src="js/app.min.js"></script>
+    <script src="js/model.min.js"></script>
+  </body>
+</html>
