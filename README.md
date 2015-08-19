@@ -14,3 +14,5 @@
   * **Auto-adjust zoom:** write function that determines proper map zoom based on screen size.
 
 3. Use gulp to automate build.
+
+4. Actually populate this README with the necessary information.
