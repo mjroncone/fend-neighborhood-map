@@ -36,7 +36,7 @@ function initialize() {
   // Sets the mapOptions that will be served in the API request
   var mapOptions = {
    center : mapTarget,
-   zoom : 16,
+   zoom : ($(window).width() <= 400 ? 15 : 16),
    disableDefaultUI: true
   }
 

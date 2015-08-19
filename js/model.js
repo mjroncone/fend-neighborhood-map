@@ -32,7 +32,13 @@ function MapMarkerViewModel() {
     });
 
   self.listClick = function() {
-    toggleSlide();
+    /* If a user's screen is smaller than 400px and they click on a location in the
+        list view, the list view is closed in order to display the full location's
+        information in the infoWindow without obstruction. */
+    if(window.matchMedia('(max-width: 400px)').matches) {
+      toggleSlide();
+    }
+
     closeVenues();
     // TODO: should clicking a list item open the infowindow also? They display same info.
     this.infowindow.open(map, this);
