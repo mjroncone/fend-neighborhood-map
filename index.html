@@ -19,7 +19,7 @@
 
       <nav id="location-list" class="slider-menu" data-bind="foreach: visibleMarkers">
         <div class="venue">
-          <h1 data-bind="html:$data.title, click: $parent.listClick"></h1>
+          <strong data-bind="html:$data.title, click: $parent.listClick"></strong>
           <p data-bind="text: $data.phone, click: $parent.listClick"></p>
           <p data-bind="text: $data.address, click: $parent.listClick"></p>
           <p data-bind="text: $data.category, click: $parent.listClick"></p>
