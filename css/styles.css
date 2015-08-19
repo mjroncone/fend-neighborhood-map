@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+h1{
+
+}
+
 html{
   width: 100%;
   height: 100%;
@@ -13,6 +17,7 @@ body{
   height: 100%;
   margin: 0;
   padding: 0;
+
 }
 
 main{
@@ -52,23 +57,24 @@ input{
 }
 
 #location-list{
-  width:20%;
+  min-width: 100px;
+  max-width: 20%;
   height: 95%;
   background-color: white;
   z-index: 2;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  flex-flow: column;
   position: fixed;
   left: 0;
   bottom: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .venue{
-  width: 100%;
-  height: 5%;
+  width: 95%;
   padding: 1vh;
+  overflow-y: visible;
   border-bottom: 1px dashed grey;
 
 }

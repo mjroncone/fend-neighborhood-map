@@ -73,8 +73,7 @@ function makeLocationsObject(data) {
     locationsObject[venue.name] = venue;
   });
   addMapsMarkers(locationsObject);
-  console.log(locationsObject);
-};
+}
 
 /* addMapsMarkers takes our locationsObject and creates Google Maps-readable marker
     objects. It reads the relevant details from each location, constructs an infowindow
@@ -85,27 +84,43 @@ function addMapsMarkers(locationsObject) {
   // loops over the locations' object data and creates a new G.Maps marker for each
   for (var business in locationsObject){
     // Similar to declaring self = this, helps with loop readability.
-    currLocation = locationsObject[business];
+    var currLocation = locationsObject[business];
+    var currLocInfo = currLocation.location;
+    var currCategories = currLocation.categories[0];
+    //console.log(currMenu.url);
     // Marker construction starts here and goes until pushed onto the markerList
     var marker = new google.maps.Marker({
-      position: {lat: currLocation.location.lat, lng: currLocation.location.lng},
+
       title: currLocation.name,
+      phone: currLocation.contact.formattedPhone,
+      address: currLocInfo.address + ', ' + currLocInfo.city + ' ' + currLocInfo.state,
+      position: {lat: currLocInfo.lat, lng: currLocInfo.lng},
+      menu: currLocation.hasMenu === true ? currLocation.menu.url : false,
+      category: 'Category: ' + currCategories.shortName,
+      keywords: currLocation.name + ' ' + currCategories.name + ' ' + currCategories.pluralName + ' ' + currCategories.shortName,
+      filter: function() {},
       animation: google.maps.Animation.DROP,
-      map: null,
-      keywords: currLocation.name,
-      filter: function() {}
+      map: null
     });
 
     /* Contains the DOM construction of our infoWindows with data from each object.
         content is also used through ko bindings for the list view*/
     marker.infowindow = new google.maps.InfoWindow({
-      content: '<section class="infoWindow">' +
-                  '<header><h1>' +
+      content: '<article class="infoWindow">' +
+                  '<h1 class="location-title">' +
                     marker.title +
-                  '</h1></header>' +
-                '</section>'
+                  '</h1>' +
+                  '<p>'+
+                    marker.phone + '<br>' +
+                    marker.address + '<br> ' +
+                    marker.category + '<br> ' +
+                    (marker.menu === false ? "Sorry, no menu available." : '<a href="' + marker.menu + '"target="blank" data-bind="click: openLink">Click to view the menu!</a>') +
+                  '</p>'+
+
+                '</article>'
     }),
 
+    // Starts or stops the bounce animation if a marker is clicked once or twice, respectively.
     marker.toggleBounce = function() {
       if (this.getAnimation() != null) {
         this.setAnimation(null);
@@ -114,32 +129,39 @@ function addMapsMarkers(locationsObject) {
       }
     };
 
+    // Closes any previously clicked markers and initiates the newly clicked marker.
     google.maps.event.addListener(marker, 'click', function() {
       closeVenues();
       this.infowindow.open(map, this);
       this.toggleBounce();
     });
 
-    // Each marker object is pushed onto our global array markerList for easy access
+    // Each marker object is pushed onto our global array markerList for easy access anywhere.
     markerList().push(marker);
-  };
-  return markerList();
+  }
 };
 
+/* updateMarkers determines which venues should be displayed based on the current filter,
+    sets their map, and returns them as an array to the invoking ViewModel for listView. */
 var updateMarkers = function(filter) {
+  // Resets the markers to none and will be returned to the ViewModel in order to use ko bindings for a listView
   var wantedVenue = [];
 
+  /* Checks each venue in the markerList to see if the current filter exists in their keywords.
+      If so, it pushes that to the wantedVenue array. */
   markerList().forEach( function(marker) {
     if (marker.keywords.toLowerCase().indexOf(filter.toLowerCase()) != -1) {
       wantedVenue.push(marker);
     }
-
+      /* All the present markers in the wantedVenue array will then have their maps set,
+          and those not present will be turned off.*/
       if (wantedVenue.indexOf(marker) != -1) {
-        marker.setMap(map);
+        marker.setMap() === map ? null : marker.setMap(map);
       } else {
         marker.setMap(null);
       }
   });
 
+  // Returns the displayed venues to the ViewModel for use in the listView.
   return wantedVenue;
 };
