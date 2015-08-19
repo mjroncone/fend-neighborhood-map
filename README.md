@@ -1,5 +1,4 @@
 # Front End Neighborhood Map (P5)
-=================================
 
 ## Description:
 
@@ -49,4 +48,4 @@ The requirements to meet the specifications of the project are as follows:
   * Google Maps Error Handling: DaveS on Stack Overflow for the function inspiration. http://stackoverflow.com/questions/9228958/how-to-check-if-google-maps-api-is-loaded
   * Mozilla Developer Network: https://developer.mozilla.org/en-US/
 
-  **I'm still looking back over my code to find more places to attribute credit. There was a lot of Google-ing for ideas, but not much code taken from others. Still, I would like to credit anyone for inspiration in how I eventually handled certain problems. If you see something that looks familiar to you, let me know!** 
+  **I'm still looking back over my code to find more places to attribute credit. There was a lot of Google-ing for ideas, but not much code taken from others. Still, I would like to credit anyone for inspiration in how I eventually handled certain problems. If you see something that looks familiar to you, let me know!**
