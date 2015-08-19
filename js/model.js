@@ -14,14 +14,14 @@ function MapMarkerViewModel() {
       thrown, the locations list populates with an error message.*/
   $.when(
     $.getJSON( fourSquareAjaxConstructor(targetLoc.lat, targetLoc.lng), function( data ) {
-          makeLocationsObject(data.response.venues) }
+          makeLocationsObject(data.response.venues); }
     ).error(function() {
-      self.visibleMarkers.push({title: "<p>Shoot! Four Square won't return our calls. What kind of friend is that? Please check your internet and try again later.</p>"})
+      self.visibleMarkers.push({title: "<p>Shoot! Four Square won't return our calls. What kind of friend is that? Please check your internet and try again later.</p>"});
     })
   )
     .then( function() {
-      self.visibleMarkers(updateMarkers(self.filter()))
-    })
+      self.visibleMarkers(updateMarkers(self.filter()));
+    });
 
   /* self.update is a ko.computed because every time the filter updates, the value of
       updateMarkers must be called again utilizing the new filter, which will alter
@@ -48,6 +48,6 @@ function MapMarkerViewModel() {
 
   window.onload = startApp;
 
-};
+}
 
 ko.applyBindings(new MapMarkerViewModel());
