@@ -87,7 +87,6 @@ function addMapsMarkers(locationsObject) {
     var currLocation = locationsObject[business];
     var currLocInfo = currLocation.location;
     var currCategories = currLocation.categories[0];
-    //console.log(currMenu.url);
     // Marker construction starts here and goes until pushed onto the markerList
     var marker = new google.maps.Marker({
 

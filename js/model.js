@@ -28,7 +28,6 @@ function MapMarkerViewModel() {
     });
 
   self.listClick = function() {
-    console.log(this);
     closeVenues();
     // TODO: should clicking a list item open the infowindow also? They display same info.
     this.infowindow.open(map, this);
