@@ -1,22 +1,19 @@
-*{
+* {
   margin: 0;
   padding: 0;
   word-wrap: break-word;
 }
 
-h1{
+h1 {
   padding-right: 10px;
 }
 
-p{
-}
-
-html{
+html {
   width: 100%;
   height: 100%;
 }
 
-body{
+body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -24,7 +21,7 @@ body{
 
 }
 
-main{
+main {
   width: 100%;
   height: 100%;
   display: flex;
@@ -32,7 +29,7 @@ main{
 }
 
 /* Contains the list button and search box*/
-#top-nav{
+#top-nav {
   height: 5%;
   width: 100%;
   z-index: 3;
@@ -44,7 +41,7 @@ main{
   flex-wrap: nowrap;
 }
 
-.search-box{
+.search-box {
   height: 100%;
   width: 75%;
   min-width: 220px;
@@ -53,7 +50,7 @@ main{
 }
 
 /* For the search box. */
-input{
+input {
   height: inherit;
   width: inherit;
   border: 0;
@@ -62,7 +59,7 @@ input{
 }
 
 /* Entire document, holds the Google Map.*/
-#map-area{
+#map-area {
   height: 100%;
   width: 100%;
   z-index: 1;
@@ -72,7 +69,7 @@ input{
 }
 
 /* The knockout-bound list of visible locations, slides in and out. */
-#location-list{
+#location-list {
   min-width: 100px;
   width: 20%;
   height: 95%;
@@ -89,21 +86,21 @@ input{
 }
 
 /* For making the location list disappear */
-.slider-menu{
+.slider-menu {
   transition: transform 0.3s;
   opacity: .9;
   transform: translateX(-100%);
 }
 
 /* For making the location list reappear */
-.has-active{
+.has-active {
   transition: transform 0.3s;
   transform: translateX(0%);
 }
 
 /* Button to make the location list slide, default settings courtesy of:
     http://callmenick.com/post/slide-and-push-menus-with-css3-transitions */
-.slider-button{
+.slider-button {
   height: 100%;
   width: 20%;
   min-width: 100px;
@@ -122,7 +119,7 @@ input{
 }
 
 /* Container of each specific location's details */
-.venue{
+.venue {
   width: 95%;
   padding: 1vh;
   overflow-y: visible;
@@ -131,17 +128,17 @@ input{
 }
 
 /* Where the error element gets appended if Google Maps fails to load properly */
-#error-box{
+#error-box {
   z-index: 100;
 }
 
 /* Controls text size for small screens */
 @media screen and (max-width: 500px) {
-  h1{
+  h1 {
     font-size: 6vw;
   }
 
-  p{
+  p {
     font-size: 4vw;
   }
 }
