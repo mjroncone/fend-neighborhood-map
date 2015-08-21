@@ -156,7 +156,6 @@ function addMapsMarkers(locationsObject) {
         markerList().push(marker);
       }
     }
-    console.log(markerList().length);
   }
 }
 

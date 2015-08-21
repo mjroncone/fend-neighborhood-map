@@ -1,4 +1,6 @@
 function MapMarkerViewModel() {
+  'use strict';
+
   var self = this;
 
   // Our data-bound filter which will be fed intto a function in order to determine which markers are displayed.
