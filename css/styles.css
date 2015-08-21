@@ -46,7 +46,7 @@ main{
 
 .search-box{
   height: 100%;
-  width: 80%;
+  width: 75%;
   min-width: 220px;
   z-index: inherit;
   opacity: inherit;
