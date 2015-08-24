@@ -30,7 +30,7 @@ main {
 
 /* Contains the list button and search box*/
 #top-nav {
-  height: 5%;
+  height: 40px;
   width: 100%;
   z-index: 3;
   position: fixed;
@@ -79,7 +79,7 @@ input {
   flex-flow: column;
   position: fixed;
   left: 0;
-  bottom: 0;
+  top: 40px;
   overflow-y: auto;
   overflow-x: hidden;
 
