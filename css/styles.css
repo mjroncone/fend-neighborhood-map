@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
+h1 {
+  padding-right: 10px;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Contains the list button and search box*/
+#top-nav {
+  height: 40px;
+  width: 100%;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: .9;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.search-box {
+  height: 100%;
+  width: 75%;
+  min-width: 220px;
+  z-index: inherit;
+  opacity: inherit;
+}
+
+/* For the search box. */
+input {
+  height: inherit;
+  width: inherit;
+  border: 0;
+  text-indent: 15px;
+  border-left: solid 1px;
+}
+
+/* Entire document, holds the Google Map.*/
+#map-area {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* The knockout-bound list of visible locations, slides in and out. */
+#location-list {
+  min-width: 100px;
+  width: 20%;
+  height: 95%;
+  background-color: white;
+  z-index: 2;
+  display: flex;
+  flex-flow: column;
+  position: fixed;
+  left: 0;
+  top: 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+/* For making the location list disappear */
+.slider-menu {
+  transition: transform 0.3s;
+  opacity: .9;
+  transform: translateX(-100%);
+}
+
+/* For making the location list reappear */
+.has-active {
+  transition: transform 0.3s;
+  transform: translateX(0%);
+}
+
+/* Button to make the location list slide, default settings courtesy of:
+    http://callmenick.com/post/slide-and-push-menus-with-css3-transitions */
+.slider-button {
+  height: 100%;
+  width: 20%;
+  min-width: 100px;
+  border-width: 2px;
+  z-index: inherit;
+  color: #000000;
+  background-color: #fff;
+  font-size: 14px;
+  border: none;
+  box-shadow: none;
+  border-radius: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Container of each specific location's details */
+.venue {
+  width: 95%;
+  padding: 1vh;
+  overflow-y: visible;
+  border-bottom: 1px dashed grey;
+
+}
+
+/* Where the error element gets appended if Google Maps fails to load properly */
+#error-box {
+  z-index: 100;
+}
+
+/* Controls text size for small screens */
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 6vw;
+  }
+
+  p {
+    font-size: 4vw;
+  }
+}
