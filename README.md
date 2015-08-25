@@ -15,7 +15,7 @@
   I may or may not come back and update the app, so if it no longer functions you may safely assume I have stopped updating it. Otherwise, enjoy!
 
 ## Instructions for operation:
-  1. Either download this repository and open the index.html file in your browser, or alternatively check out my gh-pages version at: http://mjroncone.github.io/fend-neighborhood-map-p5/
+  1. Either download this repository and open the index.html file in your browser, or alternatively check out my gh-pages version at: [http://mjroncone.github.io/fend-neighborhood-map](http://mjroncone.github.io/fend-neighborhood-map "Mike Roncone's Neighborhood Map").
   2. Once the page has loaded, you should notice a map of the Lincoln Park neighborhood located in Chicago IL. On that map their should be a number of red map markers with dots in the middle. If not, please refresh the page and try again. Any errors that would prevent you from seeing the markers should display on the page and tell you to refresh as well.
   3. Click around on the different markers to see what business is located in that spot.
   4. Up top on the left you will see a button that says "Open List". Click that to get a tiled list of all the venues currently represented on the map by markers. Clicking on a venue in this list will also activate its marker, so you can see where they are located.
